@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>出气筒 — 语言即武器</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 新手引导 -->
+    <div class="onboarding-overlay" id="onboarding">
+      <div class="onboarding-content">
+        <div class="onboarding-title">选一个人开火</div>
+        <div class="onboarding-hint">上传照片，把 TA 变成你的靶子</div>
+        <div class="onboarding-btns">
+          <button class="onboarding-primary" id="onboardingPhoto">选择照片</button>
+          <button class="onboarding-skip" id="onboardingSkip">先用默认的</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Canvas 游戏区域 -->
+    <div class="canvas-wrapper">
+      <div class="ambient-line ambient-line-1"></div>
+      <div class="ambient-line ambient-line-2"></div>
+      <div class="ambient-line ambient-line-3"></div>
+      <canvas id="gameCanvas" class="game-canvas"></canvas>
+      <button class="reset-btn" id="resetBtn">
+        <span class="reset-icon">&#x21BA;</span>
+      </button>
+    </div>
+
+    <!-- 底部情绪区域 -->
+    <div class="emotion-area">
+      <div class="glow-line"></div>
+
+      <!-- 连击释放 -->
+      <div class="combo-row" id="comboRow">
+        <div class="combo-timer-bar">
+          <div class="combo-timer-fill"></div>
+        </div>
+        <button class="combo-fire-btn" id="comboFireBtn">
+          <span class="combo-fire-text"><span class="combo-label">释放</span> 0 HIT!</span>
+        </button>
+      </div>
+
+      <!-- 模式切换 -->
+      <div class="mode-switch">
+        <button class="mode-btn mode-active" data-mode="gun">
+          <span class="mode-icon">&#x1F4A5;</span>
+          <span class="mode-label">机关枪</span>
+          <span class="mode-indicator"></span>
+        </button>
+        <button class="mode-btn" data-mode="dart">
+          <span class="mode-icon">&#x1F3AF;</span>
+          <span class="mode-label">飞镖</span>
+          <span class="mode-indicator dart-indicator"></span>
+        </button>
+      </div>
+
+      <!-- 情绪按钮 -->
+      <div class="emotion-row" id="emotionRow"></div>
+
+      <!-- 操作行 -->
+      <div class="custom-row show" id="customActions">
+        <button class="custom-btn" id="customBtn">
+          <span class="custom-text">装弹</span>
+        </button>
+        <button class="voice-toggle" id="inputModeToggle">
+          <span>&#x1F3A4;</span>
+        </button>
+      </div>
+
+      <!-- 文字输入 -->
+      <div class="inline-input-row" id="customInputRow">
+        <input class="inline-input" id="customInput" placeholder="输入你的弹药..." autocomplete="off">
+        <button class="inline-send-btn" id="sendBtn">
+          <span>发射</span>
+        </button>
+        <button class="inline-cancel-btn" id="cancelBtn">
+          <span>&#x2715;</span>
+        </button>
+      </div>
+
+      <!-- 情绪检测 -->
+      <div class="emotion-hint" id="emotionHint">
+        <span class="emotion-dot"></span>
+        <span class="emotion-hint-text"></span>
+      </div>
+
+      <!-- 语音输入 -->
+      <div class="voice-row" id="voiceRow">
+        <div class="voice-recording">
+          <span class="voice-pulse"></span>
+          <span class="voice-text">正在听...</span>
+        </div>
+        <button class="voice-stop-btn" id="voiceStopBtn">
+          <span>说完发射</span>
+        </button>
+        <button class="inline-cancel-btn" id="voiceCancelBtn">
+          <span>&#x2715;</span>
+        </button>
+      </div>
+
+      <!-- 语音按钮 -->
+      <div class="custom-row" id="voiceActions">
+        <button class="voice-btn" id="voiceBtn">
+          <span class="voice-btn-icon">&#x1F3A4;</span>
+          <span class="voice-btn-text">按住说话</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 隐藏的文件输入 -->
+  <input type="file" id="photoInput" accept="image/*" style="display:none">
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
