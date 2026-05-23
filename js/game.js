@@ -21,6 +21,7 @@ export class Game {
       hitCount: 0,
       cracks: [],
       tiltAngle: 0,
+      scale: 1,
       faceBounds: { cx: 0, cy: 0, rx: 50, ry: 60 }
     }
 
@@ -78,7 +79,9 @@ export class Game {
 
     const cx = rect.width / 2
     const cy = rect.height * 0.35
-    this.puppetState.faceBounds = { cx, cy, rx: 45, ry: 55 }
+    const scale = Math.min(rect.width / 400, rect.height / 500)
+    this.puppetState.scale = scale
+    this.puppetState.faceBounds = { cx, cy, rx: 45 * scale, ry: 55 * scale }
 
     this._initBgParticles(rect.width, rect.height)
     this._drawStatic()
@@ -230,6 +233,7 @@ export class Game {
     const { ctx } = this
     if (!ctx) return
     const { cx: fx, cy: fy, rx, ry } = this.puppetState.faceBounds
+    const s = this.puppetState.scale || 1
     const tilt = this.puppetState.tiltAngle || 0
 
     ctx.save()
@@ -239,27 +243,43 @@ export class Game {
       ctx.translate(-fx, -fy)
     }
 
-    // 身体骨架
+    // 身体骨架（按比例缩放）
+    const neckH = 30 * s
+    const shoulderW = 40 * s
+    const bodyH = 120 * s
+    const hipW = 35 * s
+    const armEndX = 70 * s
+    const armEndY = 90 * s
+    const legEndX = 30 * s
+    const legEndY = 180 * s
+
     ctx.strokeStyle = 'rgba(240,236,228,0.35)'
-    ctx.lineWidth = 2
+    ctx.lineWidth = 2 * s
     ctx.beginPath()
+    // 脖子
     ctx.moveTo(fx, fy + ry)
-    ctx.lineTo(fx, fy + ry + 30)
-    ctx.moveTo(fx - 40, fy + ry + 30)
-    ctx.lineTo(fx + 40, fy + ry + 30)
-    ctx.lineTo(fx + 35, fy + ry + 120)
-    ctx.lineTo(fx - 35, fy + ry + 120)
+    ctx.lineTo(fx, fy + ry + neckH)
+    // 肩膀
+    ctx.moveTo(fx - shoulderW, fy + ry + neckH)
+    ctx.lineTo(fx + shoulderW, fy + ry + neckH)
+    // 躯干
+    ctx.lineTo(fx + hipW, fy + ry + bodyH)
+    ctx.lineTo(fx - hipW, fy + ry + bodyH)
     ctx.closePath()
     ctx.stroke()
-    ctx.moveTo(fx - 40, fy + ry + 40)
-    ctx.lineTo(fx - 70, fy + ry + 90)
-    ctx.moveTo(fx + 40, fy + ry + 40)
-    ctx.lineTo(fx + 70, fy + ry + 90)
+    // 左臂
+    ctx.moveTo(fx - shoulderW, fy + ry + neckH + 10 * s)
+    ctx.lineTo(fx - armEndX, fy + ry + armEndY)
+    // 右臂
+    ctx.moveTo(fx + shoulderW, fy + ry + neckH + 10 * s)
+    ctx.lineTo(fx + armEndX, fy + ry + armEndY)
     ctx.stroke()
-    ctx.moveTo(fx - 20, fy + ry + 120)
-    ctx.lineTo(fx - 30, fy + ry + 180)
-    ctx.moveTo(fx + 20, fy + ry + 120)
-    ctx.lineTo(fx + 30, fy + ry + 180)
+    // 左腿
+    ctx.moveTo(fx - 20 * s, fy + ry + bodyH)
+    ctx.lineTo(fx - legEndX, fy + ry + legEndY)
+    // 右腿
+    ctx.moveTo(fx + 20 * s, fy + ry + bodyH)
+    ctx.lineTo(fx + legEndX, fy + ry + legEndY)
     ctx.stroke()
 
     // 脸部
@@ -273,10 +293,10 @@ export class Game {
 
     if (this.puppetState.hitCount > 0) {
       ctx.save()
-      ctx.font = '600 16px sans-serif'
+      ctx.font = `600 ${Math.round(16 * s)}px sans-serif`
       ctx.fillStyle = 'rgba(240,236,228,0.25)'
       ctx.textAlign = 'center'
-      ctx.fillText(`${this.puppetState.hitCount} HIT`, fx, fy + ry + 210)
+      ctx.fillText(`${this.puppetState.hitCount} HIT`, fx, fy + ry + 210 * s)
       ctx.restore()
     }
   }
@@ -531,8 +551,9 @@ export class Game {
     const { ctx, _canvasW: w } = this
     if (!ctx || comboCount === 0) return
 
+    const s = this.puppetState.scale || 1
     ctx.save()
-    const counterSize = Math.min(64, 36 + comboCount * 2)
+    const counterSize = Math.min(64 * s, (36 + comboCount * 2) * s)
     const pulse = 0.85 + Math.sin(Date.now() / 180) * 0.15
 
     if (this.attackMode === 'dart') {
@@ -565,8 +586,8 @@ export class Game {
 
       if (comboWords && comboWords.length > 0) {
         const { cx: fx, cy: fy, ry } = this.puppetState.faceBounds
-        const startY = fy + ry + 230
-        ctx.font = '600 20px sans-serif'
+        const startY = fy + ry + 230 * s
+        ctx.font = `600 ${Math.round(20 * s)}px sans-serif`
         ctx.textAlign = 'center'
         ctx.shadowColor = '#ff6600'
         ctx.shadowBlur = 8
@@ -574,7 +595,7 @@ export class Game {
         const display = comboWords.slice(-3)
         display.forEach((word, i) => {
           ctx.globalAlpha = 0.4 + (i / display.length) * 0.5
-          ctx.fillText(word, fx, startY + i * 28)
+          ctx.fillText(word, fx, startY + i * 28 * s)
         })
       }
     }
@@ -1122,14 +1143,15 @@ export class Game {
 
   // ===== 伤害数字 =====
   _spawnDamageNumber(x, y, char, color) {
+    const s = this.puppetState.scale || 1
     this._damageNumbers.push({
-      x: x + (Math.random() - 0.5) * 20,
-      y: y - 10,
-      vy: -2.5 - Math.random() * 1.5,
+      x: x + (Math.random() - 0.5) * 20 * s,
+      y: y - 10 * s,
+      vy: -2.5 * s - Math.random() * 1.5 * s,
       text: char,
       color,
       alpha: 1,
-      size: 32 + Math.random() * 16,
+      size: (32 + Math.random() * 16) * s,
       born: Date.now()
     })
   }
@@ -1181,9 +1203,10 @@ export class Game {
     const age = (Date.now() - burst.born) / 1000
     if (age > 0.8) { this._burstText = null; return }
     const { _canvasW: w, _canvasH: h } = this
+    const s = this.puppetState.scale || 1
     const alpha = age < 0.15 ? age / 0.15 : Math.max(0, 1 - (age - 0.15) / 0.65)
     const scale = age < 0.1 ? 0.5 + (age / 0.1) * 0.8 : 1.3 - (age - 0.1) * 0.4
-    const fontSize = Math.max(20, 64 * scale)
+    const fontSize = Math.max(20 * s, 64 * scale * s)
     ctx.save()
     ctx.globalAlpha = alpha
     ctx.font = `900 ${fontSize}px sans-serif`
@@ -1288,7 +1311,7 @@ export class Game {
 
       return {
         char: ch, startX, startY, hitX, hitY,
-        size: 28 + Math.random() * 12,
+        size: (28 + Math.random() * 12) * (this.puppetState.scale || 1),
         color: colors[i % colors.length],
         fireDelay: i * delayPerBullet,
         duration: 160 + Math.random() * 100,
