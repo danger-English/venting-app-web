@@ -1,5 +1,6 @@
 /* ========================================
    出气筒 Web 版 — Dark Arsenal Aesthetic
+   响应式：移动端 + 桌面端自适应
    ======================================== */
 
 :root {
@@ -36,22 +37,15 @@ html, body {
   touch-action: manipulation;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-}
-
 .container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 480px;
   height: 100vh;
   height: 100dvh;
   background-color: var(--bg-void);
   overflow: hidden;
   position: relative;
-  box-shadow: 0 0 80px rgba(0,0,0,0.5);
 }
 
 /* 深渊背景层 */
@@ -88,6 +82,7 @@ body {
 
 .canvas-wrapper {
   flex: 1;
+  min-height: 0;
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -130,8 +125,8 @@ body {
 
 .emotion-area {
   position: relative;
-  padding: 0 2.13vw 4.8vw;
-  padding-bottom: calc(4.8vw + env(safe-area-inset-bottom, 0px));
+  padding: 8px 12px 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   background:
     linear-gradient(180deg,
       rgba(10, 10, 18, 0.92) 0%,
@@ -140,6 +135,7 @@ body {
     );
   border-top: 1px solid var(--border-subtle);
   z-index: 5;
+  flex-shrink: 0;
 }
 
 .glow-line {
@@ -167,24 +163,24 @@ body {
 .mode-switch {
   display: flex;
   justify-content: center;
-  gap: 1.6vw;
-  margin-bottom: 1.87vw;
-  padding-top: 1.33vw;
+  gap: 8px;
+  margin-bottom: 6px;
+  padding-top: 4px;
 }
 
 .mode-btn {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 1.07vw;
-  padding: 1.33vw 4.8vw;
-  border-radius: 0.8vw;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border-dim);
   color: var(--text-dim);
-  font-size: 3.2vw;
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.13vw;
+  letter-spacing: 1px;
   transition: all 0.2s ease;
   overflow: hidden;
   cursor: pointer;
@@ -215,15 +211,15 @@ body {
 }
 
 .mode-icon {
-  font-size: 3.73vw;
+  font-size: 14px;
 }
 
 .mode-indicator {
   position: absolute;
   top: 50%;
-  right: 2.4vw;
-  width: 0.8vw;
-  height: 0.8vw;
+  right: 8px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: var(--gun-primary);
   box-shadow: 0 0 6px var(--gun-glow);
@@ -244,21 +240,21 @@ body {
 .emotion-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.33vw;
+  gap: 6px;
   justify-content: center;
-  margin-bottom: 1.6vw;
+  margin-bottom: 6px;
 }
 
 .emotion-btn {
   position: relative;
-  padding: 1.87vw 3.73vw;
-  border-radius: 0.53vw;
+  padding: 6px 12px;
+  border-radius: 3px;
   background: rgba(255, 42, 42, 0.06);
   border: 1px solid rgba(255, 42, 42, 0.2);
   color: var(--gun-primary);
-  font-size: 4vw;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.27vw;
+  letter-spacing: 1px;
   transition: all 0.12s ease;
   user-select: none;
   overflow: hidden;
@@ -271,7 +267,7 @@ body {
   left: 0;
   top: 20%;
   bottom: 20%;
-  width: 0.4vw;
+  width: 2px;
   background: var(--gun-primary);
   opacity: 0.3;
   transition: opacity 0.15s ease;
@@ -322,7 +318,7 @@ body {
 .custom-row {
   display: none;
   justify-content: center;
-  gap: 1.33vw;
+  gap: 8px;
 }
 
 .custom-row.show {
@@ -330,14 +326,14 @@ body {
 }
 
 .custom-btn {
-  padding: 1.33vw 5.33vw;
-  border-radius: 0.4vw;
+  padding: 6px 16px;
+  border-radius: 3px;
   background: transparent;
   border: 1px solid var(--border-dim);
   color: var(--text-dim);
-  font-size: 3.2vw;
+  font-size: 12px;
   font-weight: 400;
-  letter-spacing: 0.53vw;
+  letter-spacing: 3px;
   transition: all 0.2s ease;
   cursor: pointer;
 }
@@ -349,14 +345,14 @@ body {
 
 .voice-toggle {
   display: none;
-  width: 9.6vw;
-  height: 9.6vw;
+  width: 36px;
+  height: 36px;
   align-items: center;
   justify-content: center;
-  border-radius: 0.53vw;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-dim);
-  font-size: 4.27vw;
+  font-size: 16px;
   cursor: pointer;
 }
 
@@ -372,9 +368,9 @@ body {
 .inline-input-row {
   display: none;
   align-items: center;
-  gap: 1.6vw;
-  padding: 0 2.13vw;
-  margin-bottom: 1.6vw;
+  gap: 8px;
+  padding: 0;
+  margin-bottom: 6px;
   animation: inputSlideUp 0.25s ease;
 }
 
@@ -383,20 +379,20 @@ body {
 }
 
 @keyframes inputSlideUp {
-  from { opacity: 0; transform: translateY(2.13vw); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .inline-input {
   flex: 1;
-  height: 9.6vw;
-  padding: 0 3.2vw;
-  border-radius: 0.53vw;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border-dim);
   color: var(--text-bright);
-  font-size: 3.73vw;
-  letter-spacing: 0.13vw;
+  font-size: 14px;
+  letter-spacing: 1px;
   outline: none;
 }
 
@@ -410,17 +406,17 @@ body {
 }
 
 .inline-send-btn {
-  padding: 0 3.73vw;
-  height: 9.6vw;
+  padding: 0 14px;
+  height: 36px;
   display: flex;
   align-items: center;
-  border-radius: 0.53vw;
+  border-radius: 4px;
   background: rgba(255, 42, 42, 0.12);
   border: 1px solid rgba(255, 42, 42, 0.3);
   color: var(--gun-primary);
-  font-size: 3.47vw;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.27vw;
+  letter-spacing: 2px;
   cursor: pointer;
 }
 
@@ -429,16 +425,16 @@ body {
 }
 
 .inline-cancel-btn {
-  width: 9.6vw;
-  height: 9.6vw;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0.53vw;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-subtle);
   color: var(--text-ghost);
-  font-size: 3.73vw;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -450,9 +446,9 @@ body {
 .emotion-hint {
   display: none;
   align-items: center;
-  gap: 1.33vw;
-  padding: 0 2.13vw;
-  margin-bottom: 1.33vw;
+  gap: 6px;
+  padding: 0;
+  margin-bottom: 6px;
   animation: inputSlideUp 0.2s ease;
 }
 
@@ -461,8 +457,8 @@ body {
 }
 
 .emotion-dot {
-  width: 1.33vw;
-  height: 1.33vw;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   animation: emotionPulse 1.2s ease infinite;
 }
@@ -473,8 +469,8 @@ body {
 }
 
 .emotion-hint-text {
-  font-size: 2.93vw;
-  letter-spacing: 0.27vw;
+  font-size: 11px;
+  letter-spacing: 1px;
   font-weight: 500;
 }
 
@@ -483,7 +479,7 @@ body {
   display: none;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1.33vw;
+  margin-bottom: 6px;
 }
 
 .combo-row.show {
@@ -492,9 +488,9 @@ body {
 
 .combo-timer-bar {
   width: 80%;
-  height: 0.53vw;
-  margin: 0 auto 1.07vw;
-  border-radius: 0.27vw;
+  height: 3px;
+  margin: 0 auto 4px;
+  border-radius: 2px;
   background: rgba(255, 255, 255, 0.06);
   overflow: hidden;
 }
@@ -503,7 +499,7 @@ body {
   width: 100%;
   height: 100%;
   background: var(--gun-primary);
-  border-radius: 0.27vw;
+  border-radius: 2px;
   transform-origin: left center;
   transition: transform 0.05s linear;
   box-shadow: 0 0 8px var(--gun-glow);
@@ -517,8 +513,8 @@ body {
 
 .combo-fire-btn {
   position: relative;
-  padding: 1.87vw 7.47vw;
-  border-radius: 0.53vw;
+  padding: 6px 24px;
+  border-radius: 4px;
   background: linear-gradient(135deg,
     rgba(255, 42, 42, 0.12),
     rgba(255, 80, 0, 0.08)
@@ -531,14 +527,14 @@ body {
 
 .combo-fire-text {
   color: var(--gun-primary);
-  font-size: 4.27vw;
+  font-size: 14px;
   font-weight: 800;
-  letter-spacing: 0.4vw;
+  letter-spacing: 2px;
 }
 
 .combo-label {
   font-weight: 400;
-  font-size: 3.47vw;
+  font-size: 12px;
   opacity: 0.6;
 }
 
@@ -585,9 +581,9 @@ body {
 .voice-row {
   display: none;
   align-items: center;
-  gap: 1.6vw;
-  padding: 0 2.13vw;
-  margin-bottom: 1.6vw;
+  gap: 8px;
+  padding: 0;
+  margin-bottom: 6px;
   animation: inputSlideUp 0.25s ease;
 }
 
@@ -597,19 +593,19 @@ body {
 
 .voice-recording {
   flex: 1;
-  height: 9.6vw;
+  height: 36px;
   display: flex;
   align-items: center;
-  gap: 1.6vw;
-  padding: 0 3.2vw;
-  border-radius: 0.53vw;
+  gap: 8px;
+  padding: 0 12px;
+  border-radius: 4px;
   background: rgba(255, 42, 42, 0.06);
   border: 1px solid rgba(255, 42, 42, 0.25);
 }
 
 .voice-pulse {
-  width: 2.13vw;
-  height: 2.13vw;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: var(--gun-primary);
   animation: voicePulse 1s ease infinite;
@@ -622,22 +618,22 @@ body {
 
 .voice-text {
   color: var(--text-dim);
-  font-size: 3.47vw;
-  letter-spacing: 0.27vw;
+  font-size: 13px;
+  letter-spacing: 1px;
 }
 
 .voice-stop-btn {
-  padding: 0 3.73vw;
-  height: 9.6vw;
+  padding: 0 14px;
+  height: 36px;
   display: flex;
   align-items: center;
-  border-radius: 0.53vw;
+  border-radius: 4px;
   background: rgba(255, 42, 42, 0.15);
   border: 1px solid rgba(255, 42, 42, 0.35);
   color: var(--gun-primary);
-  font-size: 3.47vw;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.27vw;
+  letter-spacing: 1px;
   cursor: pointer;
 }
 
@@ -648,20 +644,20 @@ body {
 .voice-btn {
   display: flex;
   align-items: center;
-  gap: 1.6vw;
-  padding: 1.87vw 6.4vw;
-  border-radius: 0.53vw;
+  gap: 8px;
+  padding: 6px 20px;
+  border-radius: 4px;
   background: rgba(255, 42, 42, 0.08);
   border: 1px solid rgba(255, 42, 42, 0.25);
   color: var(--text-dim);
-  font-size: 3.47vw;
-  letter-spacing: 0.27vw;
+  font-size: 13px;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .voice-btn-icon {
-  font-size: 4.27vw;
+  font-size: 16px;
 }
 
 .voice-btn:active {
@@ -673,10 +669,10 @@ body {
 /* 重置按钮 */
 .reset-btn {
   position: absolute;
-  top: 2.13vw;
-  left: 2.13vw;
-  width: 7.47vw;
-  height: 7.47vw;
+  top: 10px;
+  left: 10px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -689,11 +685,11 @@ body {
 
 .reset-icon {
   color: rgba(240, 236, 228, 0.3);
-  font-size: 4.27vw;
+  font-size: 16px;
   line-height: 1;
 }
 
-.reset-btn:active {
+.reset-btn:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(240, 236, 228, 0.2);
 }
@@ -723,21 +719,21 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3.2vw;
-  padding: 8vw 6.4vw;
+  gap: 16px;
+  padding: 40px 32px;
 }
 
 .onboarding-title {
   color: var(--text-bright);
-  font-size: 5.87vw;
+  font-size: 28px;
   font-weight: 800;
-  letter-spacing: 0.53vw;
+  letter-spacing: 4px;
 }
 
 .onboarding-hint {
   color: var(--text-dim);
-  font-size: 3.47vw;
-  letter-spacing: 0.27vw;
+  font-size: 14px;
+  letter-spacing: 2px;
   text-align: center;
   line-height: 1.6;
 }
@@ -745,42 +741,42 @@ body {
 .onboarding-btns {
   display: flex;
   flex-direction: column;
-  gap: 2.67vw;
-  margin-top: 2.67vw;
+  gap: 12px;
+  margin-top: 12px;
   width: 100%;
   align-items: center;
 }
 
 .onboarding-primary {
-  padding: 2.93vw 10.67vw;
-  border-radius: 0.53vw;
+  padding: 12px 40px;
+  border-radius: 4px;
   background: linear-gradient(135deg,
     rgba(255, 42, 42, 0.2),
     rgba(255, 80, 0, 0.12)
   );
   border: 1px solid rgba(255, 42, 42, 0.4);
   color: var(--gun-primary);
-  font-size: 4.27vw;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.53vw;
+  letter-spacing: 4px;
   cursor: pointer;
 }
 
-.onboarding-primary:active {
-  transform: scale(0.95);
+.onboarding-primary:hover {
+  transform: scale(0.98);
 }
 
 .onboarding-skip {
-  padding: 2.13vw 5.33vw;
+  padding: 8px 20px;
   background: transparent;
   border: none;
   color: var(--text-ghost);
-  font-size: 3.2vw;
-  letter-spacing: 0.27vw;
+  font-size: 13px;
+  letter-spacing: 2px;
   cursor: pointer;
 }
 
-.onboarding-skip:active {
+.onboarding-skip:hover {
   color: var(--text-dim);
 }
 
@@ -791,12 +787,12 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   background: rgba(6, 6, 10, 0.92);
-  padding: 2.67vw 5.33vw;
-  border-radius: 0.53vw;
+  padding: 12px 24px;
+  border-radius: 4px;
   border: 1px solid var(--border-dim);
   color: var(--text-dim);
-  font-size: 3.47vw;
-  letter-spacing: 0.27vw;
+  font-size: 14px;
+  letter-spacing: 2px;
   z-index: 100;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -821,36 +817,37 @@ body {
 .modal-box {
   background: var(--bg-elevated);
   border: 1px solid var(--border-dim);
-  border-radius: 1.07vw;
-  padding: 5.33vw;
-  min-width: 60vw;
+  border-radius: 8px;
+  padding: 28px;
+  min-width: 320px;
+  max-width: 400px;
   text-align: center;
 }
 
 .modal-title {
   color: var(--text-bright);
-  font-size: 4.27vw;
+  font-size: 18px;
   font-weight: 700;
-  margin-bottom: 2.67vw;
+  margin-bottom: 12px;
 }
 
 .modal-content {
   color: var(--text-dim);
-  font-size: 3.47vw;
-  margin-bottom: 4vw;
+  font-size: 14px;
+  margin-bottom: 20px;
   line-height: 1.5;
 }
 
 .modal-btns {
   display: flex;
-  gap: 2.67vw;
+  gap: 12px;
   justify-content: center;
 }
 
 .modal-btns button {
-  padding: 2.13vw 5.33vw;
-  border-radius: 0.53vw;
-  font-size: 3.47vw;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-size: 14px;
   cursor: pointer;
 }
 
