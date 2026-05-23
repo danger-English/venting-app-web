@@ -36,14 +36,22 @@ html, body {
   touch-action: manipulation;
 }
 
+body {
+  display: flex;
+  justify-content: center;
+}
+
 .container {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 480px;
   height: 100vh;
   height: 100dvh;
   background-color: var(--bg-void);
   overflow: hidden;
   position: relative;
+  box-shadow: 0 0 80px rgba(0,0,0,0.5);
 }
 
 /* 深渊背景层 */
